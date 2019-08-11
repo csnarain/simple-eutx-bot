@@ -15,12 +15,21 @@ class MyBot extends ActivityHandler {
 
         this.onMembersAdded(async (context, next) => {
             const membersAdded = context.activity.membersAdded;
+            // console.log(membersAdded.length);
             for (let cnt = 0; cnt < membersAdded.length; ++cnt) {
                 if (membersAdded[cnt].id !== context.activity.recipient.id) {
                     await context.sendActivity('Welcome to EUTX Echo Bot!');
+                    console.log('Member Added');
                 }
             }
             // By calling next() you ensure that the next BotHandler is run.
+            await next();
+        });
+
+        this.onMembersRemoved(async (context, next) => {
+            const membersRemoved = context.activity.membersRemoved;
+            // await context.sendActivity('Sorry to see you go....:-(');
+            console.log(membersRemoved);
             await next();
         });
     }
